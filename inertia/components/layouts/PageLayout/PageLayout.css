@@ -1,6 +1,6 @@
 .page-layout {
   display: grid;
-  grid-template-rows: 4rem 1fr 4rem;
+  grid-template-rows: var(--layout-height-header) 1fr var(--layout-height-footer);
   min-height: 100vh;
 }
 

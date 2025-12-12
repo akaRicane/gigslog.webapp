@@ -1,5 +1,8 @@
 :root,
 body {
+  --layout-height-header: 4rem;
+  --layout-height-footer: 2rem;
+
   margin: 0px;
   padding: 0px;
 

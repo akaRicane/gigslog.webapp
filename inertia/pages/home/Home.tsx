@@ -1,4 +1,4 @@
-import PageLayout from "~/components/PageLayout/PageLayout"
+import PageLayout from "~/components/layouts/PageLayout/PageLayout"
 
 const Home: React.FC = () => {
   return (

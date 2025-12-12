@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react'
-import PageFooter from '~/components/PageFooter/PageFooter'
-import PageHeader from '~/components/PageHeader/PageHeader'
+import PageFooter from '~/components/layouts/PageFooter/PageFooter'
+import PageHeader from '~/components/layouts/PageHeader/PageHeader'
 import './PageLayout.css'
 
 type PageLayoutProps = {
