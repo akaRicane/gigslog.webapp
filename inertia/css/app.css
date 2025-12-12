@@ -1,0 +1,11 @@
+@import './fonts.css';
+@import './layout.css';
+@import './theme.css';
+
+/* WIDE SCREEN */
+@media (min-width: 1080px) {
+}
+
+/* TABLET SCREEN */
+@media (min-width: 720px) and (max-width: 1080px) {
+}

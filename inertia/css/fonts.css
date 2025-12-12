@@ -1,0 +1,35 @@
+.fredericka-the-great-regular {
+  font-family: 'Fredericka the Great', serif;
+  font-style: normal;
+  font-weight: 400;
+  /* color: red; */
+}
+
+.fascinate-regular {
+  font-family: 'Fascinate', system-ui;
+  font-style: normal;
+  font-weight: 400;
+  /* color: yellow; */
+}
+
+@font-face {
+  font-family: 'Pixeled';
+  src: url('/resources/assets/fonts/pixeled.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-pixeled {
+  font-family: 'Pixeled', sans-serif;
+}
+
+@font-face {
+  font-family: 'Reservoir Grunge';
+  src: url('/resources/assets/fonts/reservoir_grunge.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.font-reservoir-grunge {
+  font-family: 'Reservoir Grunge', sans-serif;
+}

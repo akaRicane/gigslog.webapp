@@ -1,0 +1,11 @@
+:root,
+body {
+  margin: 0px;
+  padding: 0px;
+
+  width: 100vw;
+  min-height: 100vh;
+
+  color: var(--color-theme-font);
+  background-color: var(--color-theme-bg);
+}

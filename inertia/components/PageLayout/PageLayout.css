@@ -1,0 +1,9 @@
+.page-layout {
+  display: grid;
+  grid-template-rows: 4rem 1fr 4rem;
+  min-height: 100vh;
+}
+
+.page-content {
+  border: 1px solid var(--color-accent);
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  @if(process.env.ENABLE_REACT_SCAN === 'true' && process.env.NODE_ENV === 'development')
+  {
+  <script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js">
+
+  </script>
+  }
+  @end
+
+  @stack('dumper')
+  @viteReactRefresh()
+  @inertiaHead()
+  @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`])
+</head>
+
+<body class="min-h-screen w-screen font-sans">
+  @inertia()
+</body>
+
+</html>
