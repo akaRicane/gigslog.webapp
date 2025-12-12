@@ -7,5 +7,8 @@
 |
 */
 
+const NavigationsController = () => import('#controllers/navigations_controller')
+
 import router from '@adonisjs/core/services/router'
-router.on('/').renderInertia('home/Home')
+
+router.get('/', [NavigationsController, 'home'])
