@@ -6,6 +6,8 @@ import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client'
 import '../css/app.css'
 
+export const apiEndpoint: string = 'http://127.0.0.1:3333/'
+
 createInertiaApp({
   progress: { color: '#5468FF' },
 
