@@ -28,3 +28,9 @@ export interface Venue {
   createdAt: string
   updatedAt: string
 }
+
+export interface User {
+  fullName: string | null
+  email: string
+  password: string
+}

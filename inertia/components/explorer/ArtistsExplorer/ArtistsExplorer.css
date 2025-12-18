@@ -1,0 +1,12 @@
+.artists-explorer-container {
+  width: 100%;
+}
+
+.artists-explorer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 2rem;
+  column-gap: 2rem;
+
+  padding: 2rem;
+}

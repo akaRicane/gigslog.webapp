@@ -19,6 +19,7 @@ export default await Env.create(new URL('../', import.meta.url), {
   LOG_LEVEL: Env.schema.string(),
   VITE_APP_NAME: Env.schema.string(),
   ENABLE_REACT_SCAN: Env.schema.string(),
+  BACKEND_API_URL: Env.schema.string(),
 
   /*
   |----------------------------------------------------------

@@ -11,3 +11,7 @@
 
   border: 1px solid var(--color-accent);
 }
+
+.page-header-link {
+  color: white;
+}

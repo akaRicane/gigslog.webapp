@@ -1,6 +1,8 @@
 import React from 'react'
 import { apiEndpoint } from '~/app/app'
+import DisplayArtistInfos from '~/components/display/DisplayArtistInfos/DisplayArtistInfos'
 import { Artist } from '~/types/api_models'
+import './ArtistsExplorer.css'
 
 const ArtistsExplorer: React.FC = () => {
   const [artists, setArtists] = React.useState<Artist[]>([])
@@ -13,13 +15,13 @@ const ArtistsExplorer: React.FC = () => {
   }, [])
 
   return (
-    <div>
+    <div className="artists-explorer-container">
       <label>Artists explorer</label>
-      <ul>
+      <div className="artists-explorer-grid">
         {artists.map((artist: Artist) => {
-          return <li key={artist.id}>{artist.fullName}</li>
+          return <DisplayArtistInfos artist={artist} />
         })}
-      </ul>
+      </div>
     </div>
   )
 }

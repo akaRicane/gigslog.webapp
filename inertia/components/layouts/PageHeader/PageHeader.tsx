@@ -1,12 +1,20 @@
+import { Link } from '@inertiajs/react'
 import './PageHeader.css'
 
 type PageHeaderProps = {}
 
 const PageHeader: React.FC<PageHeaderProps> = () => {
   return (
-    <div className='page-header'>
-      <p>home</p>
-      <p>my account</p>
+    <div className="page-header">
+      <Link href={'/'} target="_blank" className="page-header-link">
+        home
+      </Link>
+      <Link href={'/login'} target="_blank" className="page-header-link">
+        login
+      </Link>
+      <Link href={'/account'} target="_blank" className="page-header-link">
+        my account
+      </Link>
     </div>
   )
 }

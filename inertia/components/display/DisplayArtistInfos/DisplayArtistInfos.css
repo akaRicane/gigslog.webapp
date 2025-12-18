@@ -1,0 +1,14 @@
+.display-artist-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+  min-height: 32rem;
+  border: 1px solid red;
+}
+
+.display-artist-container > .name {
+  font-size: x-large;
+  border-bottom: 1px solid white;
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import ArtistsExplorer from '~/components/explorer/ArtistsExplorer'
+import ArtistsExplorer from '~/components/explorer/ArtistsExplorer/ArtistsExplorer'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 import './Home.css'
 import VenuesExplorer from '~/components/explorer/VenuesExplorer'
