@@ -1,0 +1,37 @@
+.explore-container {
+  display: grid;
+  grid-template-columns: 20% 1fr;
+
+  height: 100%;
+
+  border: 1px dashed red;
+}
+
+.lateral-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1rem;
+  border: 1px solid orange;
+}
+
+.lateral-menu-button {
+  width: 90%;
+  height: 4rem;
+  cursor: pointer;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+
+  padding: 1rem;
+  border: 1px solid orange;
+
+  /* overflow: auto; */
+}

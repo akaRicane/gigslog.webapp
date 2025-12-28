@@ -5,6 +5,10 @@ export default class NavigationsController {
     return inertia.render('home/Home', {})
   }
 
+  explore({ inertia }: HttpContext) {
+    return inertia.render('explore/Explore', {})
+  }
+
   account({ inertia }: HttpContext) {
     return inertia.render('account/Account', {})
   }

@@ -9,8 +9,8 @@ const PageHeader: React.FC<PageHeaderProps> = () => {
       <Link href={'/'} target="_blank" className="page-header-link">
         home
       </Link>
-      <Link href={'/login'} target="_blank" className="page-header-link">
-        login
+      <Link href={'/explore'} target="_blank" className="page-header-link">
+        explore
       </Link>
       <Link href={'/account'} target="_blank" className="page-header-link">
         my account
