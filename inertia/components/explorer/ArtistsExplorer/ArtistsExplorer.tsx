@@ -1,5 +1,5 @@
 import React from 'react'
-import { apiEndpoint } from '~/app/app'
+import { apiEndpoint } from '~/app/navigation'
 import DisplayArtistInfos from '~/components/display/DisplayArtistInfos/DisplayArtistInfos'
 import { Artist } from '~/types/api_models'
 import './ArtistsExplorer.css'

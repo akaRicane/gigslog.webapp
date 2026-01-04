@@ -1,5 +1,5 @@
 import React from 'react'
-import { apiEndpoint } from '~/app/app'
+import { apiEndpoint } from '~/app/navigation'
 import { Venue } from '~/types/api_models'
 
 const VenuesExplorer: React.FC = () => {

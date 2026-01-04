@@ -1,9 +1,11 @@
+import NavigationsController from '#controllers/navigations_controller'
+import { InferPageProps } from '@adonisjs/inertia/types'
 import { Link } from '@inertiajs/react'
 import React from 'react'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 import './Home.css'
 
-const Home: React.FC = () => {
+const Home: React.FC<InferPageProps<NavigationsController, 'home'>> = () => {
   return (
     <PageLayout title="Gigslog">
       <div className="home-container">

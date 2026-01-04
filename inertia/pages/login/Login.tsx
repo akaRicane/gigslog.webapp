@@ -1,50 +1,30 @@
+import NavigationsController from '#controllers/navigations_controller'
+import { UserCredentials } from '#types/backend_api'
+import { InferPageProps } from '@adonisjs/inertia/types'
 import React from 'react'
+import { queryAuthLogin } from '~/app/navigation'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 
-const Login: React.FC = () => {
-  // const [authInfos, setAuthInfos] = React.useState<User>({
-  //   fullName: '',
-  //   email: 'admin@gigslog.com',
-  //   password: 'admin123',
-  // })
-
-  // const [authToken, setAuthToken] = React.useState<string>('')
-
-  // const onLoginFormSubmit = () => {
-  //   console.log('onLoginFormSubmit')
-
-  //   fetch(apiEndpoint + 'users/login', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(authInfos),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       const { user, token } = { ...data }
-  //       console.log(data, user, token)
-  //       setAuthInfos(user)
-  //       setAuthToken(token.value)
-
-  //       localStorage.setItem('oat_token', token.value)
-  //     })
-  // }
+const Login: React.FC<InferPageProps<NavigationsController, 'login'>> = () => {
+  const [credentials, _setCredentials] = React.useState<UserCredentials>({
+    fullName: '',
+    email: 'admin@gigslog.com',
+    password: 'admin123',
+  })
 
   return (
     <PageLayout title="login">
       <div>
-        {/* <form action={onLoginFormSubmit}>
+        <p>login page</p>
+        <form action={() => queryAuthLogin(credentials)}>
           <p>name</p>
-          <input onChange={(e) => console.log(e.target.value)} value={authInfos.fullName || ''} />
+          <input onChange={(e) => console.log(e.target.value)} value={credentials.fullName || ''} />
           <p>email</p>
-          <input onChange={(e) => console.log(e.target.value)} value={authInfos.email} />
+          <input onChange={(e) => console.log(e.target.value)} value={credentials.email} />
           <p>password</p>
-          <input onChange={(e) => console.log(e.target.value)} value={authInfos.password} />
+          <input onChange={(e) => console.log(e.target.value)} value={credentials.password} />
           <button type="submit">submit</button>
         </form>
-        <p>Auth token: {authToken}</p> */}
-        <p>login page</p>
       </div>
     </PageLayout>
   )

@@ -1,58 +1,17 @@
+import NavigationsController from '#controllers/navigations_controller'
+import { InferPageProps } from '@adonisjs/inertia/types'
 import React from 'react'
+import { queryAuthLogout } from '~/app/navigation'
+import DisplayUserInfos from '~/components/display/DisplayUserInfos/DisplayUserInfos'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 import './Account.css'
 
-const Account: React.FC = () => {
-  // const [authToken, setAuthToken] = React.useState<string>('')
-  // const [userInfos, setUserInfos] = React.useState<User | null>(null)
-
-  // React.useEffect(() => {
-  //   setAuthToken(localStorage.getItem('oat_token') || '')
-  //   fetchingMeInfos()
-  // }, [authToken])
-
-  // const fetchingMeInfos = () => {
-  //   console.log('fetchingMeInfos')
-  //   if (authToken !== '') {
-  //     fetch(apiEndpoint + 'users/me', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Bearer ${authToken}`,
-  //       },
-  //     })
-  //       .then((res) => res.json())
-  //       .then((user: User) => setUserInfos(user))
-  //   }
-  // }
-
-  // const queryLogout = () => {
-  //   console.log('queryLogout')
-  //   fetch(apiEndpoint + 'users/logout', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': `Bearer ${authToken}`,
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((message) => {
-  //       console.log('logged out ?', message)
-  //       setAuthToken('')
-  //       setUserInfos(null)
-  //       localStorage.setItem('oat_token', '')
-  //     })
-  // }
-
+const Account: React.FC<InferPageProps<NavigationsController, 'account'>> = ({ user }) => {
   return (
     <PageLayout title="My account">
       <div>
-        <p>account connected page</p>
-        {/* <p>{authToken || ''}</p>
-        <button onClick={() => fetchingMeInfos()}>{authToken !== '' ? 'me' : 'no token'}</button>
-        <button onClick={() => queryLogout()}>logout</button> */}
-
-        {/* <DisplayUserInfos user={userInfos} /> */}
+        <DisplayUserInfos user={user} />
+        <button onClick={() => queryAuthLogout()}>LOGOUT</button>
       </div>
     </PageLayout>
   )

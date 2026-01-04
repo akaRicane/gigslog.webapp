@@ -1,3 +1,5 @@
+import NavigationsController from '#controllers/navigations_controller'
+import { InferPageProps } from '@adonisjs/inertia/types'
 import React, { Activity } from 'react'
 import ArtistsExplorer from '~/components/explorer/ArtistsExplorer/ArtistsExplorer'
 import VenuesExplorer from '~/components/explorer/VenuesExplorer'
@@ -9,7 +11,7 @@ enum ContentCategories {
   VENUES = 'venues',
 }
 
-const Explore: React.FC = () => {
+const Explore: React.FC<InferPageProps<NavigationsController, 'explore'>> = () => {
   const [selectedView, setSelectedView] = React.useState<ContentCategories>(
     ContentCategories.ARTISTS
   )
