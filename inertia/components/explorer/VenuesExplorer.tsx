@@ -1,22 +1,18 @@
+import { VenueModel } from '#types/models_api'
 import React from 'react'
-import { apiEndpoint } from '~/app/navigation'
-import { Venue } from '~/types/api_models'
 
-const VenuesExplorer: React.FC = () => {
-  const [venues, setVenues] = React.useState<Venue[]>([])
+type VenueExplorerProps = {
+  venues: VenueModel[]
+}
 
-  React.useEffect(() => {
-    console.log('use effect fetching venues/')
-    fetch(apiEndpoint + 'venues', { method: 'GET' })
-      .then((res) => res.json())
-      .then((data: Venue[]) => setVenues(data))
-  }, [])
+const VenuesExplorer: React.FC<VenueExplorerProps> = (props) => {
+  const [venues, _setVenues] = React.useState<VenueModel[]>(props.venues)
 
   return (
     <div>
       <label>Venues explorer</label>
       <ul>
-        {venues.map((venue: Venue) => {
+        {venues.map((venue: VenueModel) => {
           return (
             <li key={venue.id}>
               {venue.fullName} ({venue.country})

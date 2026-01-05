@@ -1,11 +1,11 @@
 // app/controllers/auth_controller.ts
-import BackendApiService from '#services/backend_api_service'
+import AuthenticationApiService from '#services/api/authentication_service'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
 @inject()
 export default class AuthController {
-  backendApi = new BackendApiService()
+  authService = new AuthenticationApiService()
 
   /**
    * Creates/registers a new user
@@ -16,7 +16,7 @@ export default class AuthController {
   async register({ request, response }: HttpContext) {
     const { fullName, email, password } = request.body()
 
-    const { data, status, ok } = await this.backendApi.createUser({
+    const { data, status, ok } = await this.authService.createUser({
       fullName,
       email,
       password,
@@ -38,7 +38,7 @@ export default class AuthController {
   async login({ request, response }: HttpContext) {
     const { fullName, email, password } = request.body()
 
-    const { data, status, ok } = await this.backendApi.loginUser({
+    const { data, status, ok } = await this.authService.loginUser({
       fullName,
       email,
       password,
@@ -62,7 +62,7 @@ export default class AuthController {
   async logout({ request, response }: HttpContext) {
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.backendApi.logoutUser(authToken)
+    const { data, status, ok } = await this.authService.logoutUser(authToken)
 
     if (!ok) {
       return response.status(status).send(data)
@@ -81,7 +81,7 @@ export default class AuthController {
   async me({ request, response }: HttpContext) {
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.backendApi.getUser(authToken)
+    const { data, status, ok } = await this.authService.getUser(authToken)
 
     if (!ok) {
       return response.status(status).send(data)
@@ -100,7 +100,7 @@ export default class AuthController {
     const { newFullName, newPassword } = request.body()
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.backendApi.updateUser(
+    const { data, status, ok } = await this.authService.updateUser(
       { newFullName, newPassword },
       authToken
     )
@@ -122,7 +122,7 @@ export default class AuthController {
     const { email, password } = request.body()
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.backendApi.deleteUser(
+    const { data, status, ok } = await this.authService.deleteUser(
       {
         email,
         password,

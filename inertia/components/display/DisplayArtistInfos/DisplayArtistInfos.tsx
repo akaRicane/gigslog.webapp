@@ -1,8 +1,8 @@
-import { Artist } from '~/types/api_models'
+import { ArtistModel } from '#types/models_api'
 import './DisplayArtistInfos.css'
 
 type ArtistInfosProps = {
-  artist: Artist
+  artist: ArtistModel
 }
 
 const DisplayArtistInfos: React.FC<ArtistInfosProps> = ({ artist }) => {

@@ -1,3 +1,5 @@
+import type { ArtistModel, UserModel, VenueModel } from '#types/models_api'
+
 export type UserCredentials = {
   email: string
   password: string
@@ -7,14 +9,6 @@ export type UserCredentials = {
 export type UserUpdateInformations = {
   newFullName?: string
   newPassword?: string
-}
-
-export type UserModel = {
-  email: string
-  fullName: string
-  createdAt: string
-  updatedAt: string
-  id: number
 }
 
 export type TokenInformations = {

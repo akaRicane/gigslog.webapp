@@ -1,30 +1,22 @@
+import { ArtistModel } from '#types/models_api'
 import React from 'react'
-import { apiEndpoint } from '~/app/navigation'
 import DisplayArtistInfos from '~/components/display/DisplayArtistInfos/DisplayArtistInfos'
-import { Artist } from '~/types/api_models'
 import './ArtistsExplorer.css'
 
-const ArtistsExplorer: React.FC = () => {
-  const [artists, setArtists] = React.useState<Artist[]>([])
-  const [filteredArtists, setFilteredArtists] = React.useState<Artist[]>([])
+type ArtistsExplorerProps = {
+  artists: ArtistModel[]
+}
+
+const ArtistsExplorer: React.FC<ArtistsExplorerProps> = (props) => {
+  const [filteredArtists, setFilteredArtists] = React.useState<ArtistModel[]>([])
   const [filterValue, setFilterValue] = React.useState<string>('')
 
   React.useEffect(() => {
-    console.log('use effect fetching artists/')
-    fetch(apiEndpoint + 'artists', { method: 'GET' })
-      .then((res) => res.json())
-      .then((data: Artist[]) => {
-        setArtists(data)
-        setFilteredArtists(data) // Initialize filtered artists
-      })
-  }, [])
-
-  React.useEffect(() => {
     if (!filterValue.trim()) {
-      setFilteredArtists(artists)
+      setFilteredArtists(props.artists)
     } else {
       const searchTerm = filterValue.toLowerCase().trim()
-      const remaining: Artist[] = artists.filter((artist: Artist) => {
+      const remaining: ArtistModel[] = props.artists.filter((artist: ArtistModel) => {
         // Check if fullName includes the search term
         const matchesName = artist.fullName.toLowerCase().includes(searchTerm)
 
@@ -38,7 +30,7 @@ const ArtistsExplorer: React.FC = () => {
       })
       setFilteredArtists(remaining)
     }
-  }, [filterValue, artists]) // Add artists to dependencies
+  }, [filterValue, props.artists]) // Add artists to dependencies
 
   return (
     <div className="artists-explorer-container">
@@ -49,7 +41,7 @@ const ArtistsExplorer: React.FC = () => {
         onChange={(e) => setFilterValue(e.target.value)}
       />
       <div className="artists-explorer-grid">
-        {filteredArtists.map((artist: Artist) => (
+        {filteredArtists.map((artist: ArtistModel) => (
           <div key={artist.id}>
             <DisplayArtistInfos artist={artist} />
           </div>

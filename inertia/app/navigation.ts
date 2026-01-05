@@ -1,7 +1,5 @@
 import { UserCredentials } from '#types/backend_api'
 
-export const apiEndpoint: string = 'http://127.0.0.1:3333/'
-
 export enum NavigationRoutes {
   HOME = '/',
   EXPLORE = '/explore',
@@ -9,7 +7,7 @@ export enum NavigationRoutes {
   ACCOUNT = '/account',
 }
 
-export enum ApiRoutes {
+export enum AuthApiRoutes {
   REGISTER = '/auth/register',
   DELETE = '/auth/delete',
   LOGIN = '/auth/login',
@@ -19,7 +17,7 @@ export enum ApiRoutes {
 }
 
 export const queryAuthLogin = async (credentials: UserCredentials): Promise<void> => {
-  fetch(ApiRoutes.LOGIN, {
+  fetch(AuthApiRoutes.LOGIN, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +29,7 @@ export const queryAuthLogin = async (credentials: UserCredentials): Promise<void
 }
 
 export const queryAuthLogout = async (): Promise<void> => {
-  fetch(ApiRoutes.LOGOUT, {
+  fetch(AuthApiRoutes.LOGOUT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
