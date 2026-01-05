@@ -1,3 +1,4 @@
+import { ContentCollections } from '#common/enums/content'
 import NavigationsController from '#controllers/navigations_controller'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import React, { Activity } from 'react'
@@ -6,19 +7,12 @@ import VenuesExplorer from '~/components/explorer/VenuesExplorer'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 import './Explore.css'
 
-enum ContentCollections {
-  ARTISTS = 'artists',
-  VENUES = 'venues',
-}
-
 const Explore: React.FC<InferPageProps<NavigationsController, 'explore'>> = (props) => {
   const [selectedCollection, setSelectedCollection] = React.useState<ContentCollections>(
     ContentCollections.ARTISTS
   )
 
-  React.useEffect(() => {
-    console.log(props.artists)
-  }, [])
+  React.useEffect(() => {}, [])
 
   return (
     <PageLayout title="explore">

@@ -1,4 +1,4 @@
-import { UserModel } from '#types/models_api'
+import { UserModel } from '#common/types/models_api'
 
 type DisplayUserInfosProps = {
   user: UserModel | null

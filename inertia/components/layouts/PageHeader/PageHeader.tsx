@@ -1,6 +1,6 @@
+import { NavigationRoutes } from '#common/enums/server_routes'
 import { Link } from '@inertiajs/react'
 import React from 'react'
-import { NavigationRoutes } from '~/app/navigation'
 import './PageHeader.css'
 
 type PageHeaderProps = {}

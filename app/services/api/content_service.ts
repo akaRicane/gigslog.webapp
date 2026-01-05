@@ -1,11 +1,7 @@
+import { GetCollectionsRoutes } from '#common/enums/api_routes'
+import { ApiResponse } from '#common/types/backend_api'
+import { ArtistModel, VenueModel } from '#common/types/models_api'
 import env from '#start/env'
-import { ApiResponse } from '#types/backend_api'
-import { ArtistModel, VenueModel } from '#types/models_api'
-
-export enum GetCollectionsRoutes {
-  ARTISTS = '/artists',
-  VENUES = '/venues',
-}
 
 export class ContentApiService {
   private baseUrl: string

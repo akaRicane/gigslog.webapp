@@ -1,4 +1,4 @@
-import { ArtistModel } from '#types/models_api'
+import { ArtistModel } from '#common/types/models_api'
 import React from 'react'
 import DisplayArtistInfos from '~/components/display/DisplayArtistInfos/DisplayArtistInfos'
 import './ArtistsExplorer.css'

@@ -1,7 +1,7 @@
 import NavigationsController from '#controllers/navigations_controller'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import React from 'react'
-import { queryAuthLogout } from '~/app/navigation'
+import { queryAuthLogout } from '~/app/auth_calls'
 import DisplayUserInfos from '~/components/display/DisplayUserInfos/DisplayUserInfos'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 import './Account.css'

@@ -1,4 +1,4 @@
-import type { ArtistModel, UserModel, VenueModel } from '#types/models_api'
+import type { UserModel } from '#common/types/models_api'
 
 export type UserCredentials = {
   email: string

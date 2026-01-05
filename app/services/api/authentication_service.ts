@@ -1,5 +1,5 @@
 // app/services/backend_api_service.ts
-import env from '#start/env'
+import { AuthenticationApiRoutes } from '#common/enums/api_routes'
 import {
   ApiResponse,
   ResponseCreateUser,
@@ -10,17 +10,8 @@ import {
   ResponseUpdateUser,
   UserCredentials,
   UserUpdateInformations,
-} from '#types/backend_api'
-
-enum AuthenticationApiRoutes {
-  REGISTER = '/user/register',
-  REMOVE = '/user/remove',
-  UPDATE = '/user/update',
-  LOGIN = '/user/login',
-  LOGOUT = '/user/logout',
-  ME = '/user/me',
-  INDEX = '/users',
-}
+} from '#common/types/backend_api'
+import env from '#start/env'
 
 export default class AuthenticationApiService {
   private baseUrl: string

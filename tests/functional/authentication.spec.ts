@@ -1,4 +1,4 @@
-import { UserCredentials } from '#types/backend_api'
+import { UserCredentials } from '#common/types/backend_api'
 import { test } from '@japa/runner'
 
 /* STATUS CODE MEMENTO

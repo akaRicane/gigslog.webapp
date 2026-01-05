@@ -1,8 +1,8 @@
+import { UserCredentials } from '#common/types/backend_api'
 import NavigationsController from '#controllers/navigations_controller'
-import { UserCredentials } from '#types/backend_api'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import React from 'react'
-import { queryAuthLogin } from '~/app/navigation'
+import { queryAuthLogin } from '~/app/auth_calls'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 
 const Login: React.FC<InferPageProps<NavigationsController, 'login'>> = () => {

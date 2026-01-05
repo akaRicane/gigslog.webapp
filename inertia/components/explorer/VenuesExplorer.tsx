@@ -1,4 +1,4 @@
-import { VenueModel } from '#types/models_api'
+import { VenueModel } from '#common/types/models_api'
 import React from 'react'
 
 type VenueExplorerProps = {

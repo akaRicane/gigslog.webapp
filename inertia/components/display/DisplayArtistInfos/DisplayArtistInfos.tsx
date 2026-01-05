@@ -1,4 +1,4 @@
-import { ArtistModel } from '#types/models_api'
+import { ArtistModel } from '#common/types/models_api'
 import './DisplayArtistInfos.css'
 
 type ArtistInfosProps = {
