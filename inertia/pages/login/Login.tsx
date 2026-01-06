@@ -7,7 +7,6 @@ import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 
 const Login: React.FC<InferPageProps<NavigationsController, 'login'>> = () => {
   const [credentials, _setCredentials] = React.useState<UserCredentials>({
-    fullName: '',
     email: 'admin@gigslog.com',
     password: 'admin123',
   })
@@ -15,10 +14,7 @@ const Login: React.FC<InferPageProps<NavigationsController, 'login'>> = () => {
   return (
     <PageLayout title="login">
       <div>
-        <p>login page</p>
         <form action={() => queryAuthLogin(credentials)}>
-          <p>name</p>
-          <input onChange={(e) => console.log(e.target.value)} value={credentials.fullName || ''} />
           <p>email</p>
           <input onChange={(e) => console.log(e.target.value)} value={credentials.email} />
           <p>password</p>

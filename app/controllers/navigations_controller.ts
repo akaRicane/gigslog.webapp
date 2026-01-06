@@ -29,7 +29,8 @@ export default class NavigationsController {
       if (!ok) {
         return ctx.response.redirect('login')
       }
-      return ctx.inertia.render('account/Account', { user: data })
+      const { user, profile } = { ...data }
+      return ctx.inertia.render('account/Account', { user, profile })
     } else {
       return ctx.response.redirect('login')
     }

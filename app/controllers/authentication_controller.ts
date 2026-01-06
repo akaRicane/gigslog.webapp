@@ -97,13 +97,10 @@ export default class AuthController {
    * @returns UserModel
    */
   async update({ request, response }: HttpContext) {
-    const { newFullName, newPassword } = request.body()
+    const { newPassword } = request.body()
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.authService.updateUser(
-      { newFullName, newPassword },
-      authToken
-    )
+    const { data, status, ok } = await this.authService.updateUser({ newPassword }, authToken)
 
     if (!ok) {
       return response.status(status).send(data)

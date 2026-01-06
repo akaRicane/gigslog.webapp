@@ -1,9 +1,23 @@
+import { UserRole } from '#common/enums/users'
+import type { UUID } from 'node:crypto'
+
 export type UserModel = {
+  id: number
+  publicId: UUID
   email: string
-  fullName: string
+  emailIsVerified: boolean
+  userRole: UserRole
   createdAt: string
   updatedAt: string
-  id: number
+}
+
+export type ProfileModel = {
+  userPublicId: UUID
+  displayName: string | null
+  bio: string | null
+  avatarUrl: string | null
+  city: string | null
+  country: string | null
 }
 
 export type ArtistModel = {
