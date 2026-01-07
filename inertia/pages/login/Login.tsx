@@ -1,26 +1,56 @@
-import { UserCredentials } from '#common/types/backend_api'
 import NavigationsController from '#controllers/navigations_controller'
 import { InferPageProps } from '@adonisjs/inertia/types'
-import React from 'react'
-import { queryAuthLogin } from '~/app/auth_calls'
+import React, { Activity } from 'react'
+import LoginCard from '~/components/actions/auth/LoginCard/LoginCard'
+import RegisterCard from '~/components/actions/RegisterCard/RegisterCard'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
+import './Login.css'
+
+enum AvailableActionsCards {
+  LOGIN = 'login',
+  REGISTER = 'register',
+}
 
 const Login: React.FC<InferPageProps<NavigationsController, 'login'>> = () => {
-  const [credentials, _setCredentials] = React.useState<UserCredentials>({
-    email: 'admin@gigslog.com',
-    password: 'admin123',
-  })
+  const [selectedAction, setAction] = React.useState<AvailableActionsCards>(AvailableActionsCards.LOGIN)
 
   return (
     <PageLayout title="login">
-      <div>
-        <form action={() => queryAuthLogin(credentials)}>
-          <p>email</p>
-          <input onChange={(e) => console.log(e.target.value)} value={credentials.email} />
-          <p>password</p>
-          <input onChange={(e) => console.log(e.target.value)} value={credentials.password} />
-          <button type="submit">submit</button>
-        </form>
+      <div className="page-container">
+        <div className="actions-container">
+          <div className="actions-header">
+            <button
+              className={
+                selectedAction === AvailableActionsCards.LOGIN
+                  ? 'actions-header-select-action-active'
+                  : 'actions-header-select-action'
+              }
+              onClick={() => setAction(AvailableActionsCards.LOGIN)}
+            >
+              login
+            </button>
+            <button
+              className={
+                selectedAction === AvailableActionsCards.REGISTER
+                  ? 'actions-header-select-action-active'
+                  : 'actions-header-select-action'
+              }
+              onClick={() => setAction(AvailableActionsCards.REGISTER)}
+            >
+              register
+            </button>
+          </div>
+          <div className="actions-dynamic-content">
+            <Activity mode={selectedAction === AvailableActionsCards.LOGIN ? 'visible' : 'hidden'}>
+              <LoginCard />
+            </Activity>
+            <Activity
+              mode={selectedAction === AvailableActionsCards.REGISTER ? 'visible' : 'hidden'}
+            >
+              <RegisterCard />
+            </Activity>
+          </div>
+        </div>
       </div>
     </PageLayout>
   )
