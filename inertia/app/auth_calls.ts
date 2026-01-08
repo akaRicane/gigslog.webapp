@@ -1,9 +1,9 @@
 import { AuthenticationRoutes, NavigationRoutes } from '#common/enums/server_routes'
-import { UserCredentials } from '#common/types/backend_api'
+import { ApiResponseMessage, UserCredentials } from '#common/types/backend_api'
 
 export const queryAuthRegister = async (credentials: UserCredentials): Promise<void> => {
   if (credentials.password !== credentials.confirmPassword) {
-    return Promise.reject()
+    return Promise.reject(alert('confirmation password does not match'))
   }
 
   return fetch(AuthenticationRoutes.REGISTER, {
@@ -13,8 +13,17 @@ export const queryAuthRegister = async (credentials: UserCredentials): Promise<v
     },
     body: JSON.stringify(credentials),
   })
-    .then(() => window.location.replace(NavigationRoutes.ACCOUNT))
-    .catch((err) => alert('queryAuthRegister failed' + JSON.stringify(err)))
+    .then(async (res) => {
+      if (res.status === 200) {
+        return Promise.resolve(window.location.replace(NavigationRoutes.ACCOUNT))
+      } else {
+        const data: ApiResponseMessage = await res.json()
+        return Promise.resolve(
+          alert('queryAuthRegister failed: ' + data.message + ' with status:' + data.status)
+        )
+      }
+    })
+    .catch((err) => Promise.reject(alert('queryAuthRegister failed' + JSON.stringify(err))))
 }
 
 export const queryAuthLogin = async (credentials: UserCredentials): Promise<void> => {
@@ -25,8 +34,17 @@ export const queryAuthLogin = async (credentials: UserCredentials): Promise<void
     },
     body: JSON.stringify(credentials),
   })
-    .then(() => window.location.replace(NavigationRoutes.ACCOUNT))
-    .catch((err) => alert('queryAuthLogin failed' + JSON.stringify(err)))
+    .then(async (res) => {
+      if (res.status === 200) {
+        return Promise.resolve(window.location.replace(NavigationRoutes.ACCOUNT))
+      } else {
+        const data: ApiResponseMessage = await res.json()
+        return Promise.resolve(
+          alert('queryAuthLogin failed: ' + data.message + ' with status:' + data.status)
+        )
+      }
+    })
+    .catch((err) => Promise.reject(alert('queryAuthLogin failed' + JSON.stringify(err))))
 }
 
 export const queryAuthLogout = async (): Promise<void> => {
@@ -36,6 +54,15 @@ export const queryAuthLogout = async (): Promise<void> => {
       'Content-Type': 'application/json',
     },
   })
-    .then(() => window.location.reload())
-    .catch((err) => console.error('queryAuthLogout failed', err))
+    .then(async (res) => {
+      if (res.status === 200) {
+        return Promise.resolve(window.location.reload())
+      } else {
+        const data: ApiResponseMessage = await res.json()
+        return Promise.resolve(
+          alert('queryAuthLogout failed: ' + data.message + ' with status:' + data.status)
+        )
+      }
+    })
+    .catch((err) => Promise.reject(alert('queryAuthLogout failed' + JSON.stringify(err))))
 }
