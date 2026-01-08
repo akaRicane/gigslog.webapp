@@ -14,19 +14,19 @@ export default class AuthController {
    * @returns UserModel
    */
   async register({ request, response }: HttpContext) {
-    const { fullName, email, password } = request.body()
+    const { email, password, confirmPassword } = request.body()
 
     const { data, status, ok } = await this.authService.createUser({
-      fullName,
       email,
       password,
+      confirmPassword,
     })
 
-    if (!ok) {
-      return response.status(status).send(data)
-    }
+    ok
+      ? response.cookie('oat_token', data.token.value as string)
+      : response.clearCookie('oat_token')
 
-    return response.status(status).send(data)
+    return response.status(status).send({ ...data, status })
   }
 
   /**
@@ -36,21 +36,18 @@ export default class AuthController {
    * @returns UserModel & TokenInformations
    */
   async login({ request, response }: HttpContext) {
-    const { fullName, email, password } = request.body()
+    const { email, password } = request.body()
 
     const { data, status, ok } = await this.authService.loginUser({
-      fullName,
       email,
       password,
     })
 
-    if (!ok) {
-      response.clearCookie('oat_token')
-      return response.status(status).send(data)
-    }
+    ok
+      ? response.cookie('oat_token', data.token.value as string)
+      : response.clearCookie('oat_token')
 
-    response.cookie('oat_token', data.token.value as string)
-    return response.status(status).send(data)
+    return response.status(status).send({ ...data, status })
   }
 
   /**
@@ -64,12 +61,11 @@ export default class AuthController {
 
     const { data, status, ok } = await this.authService.logoutUser(authToken)
 
-    if (!ok) {
-      return response.status(status).send(data)
+    if (ok) {
+      response.clearCookie('oat_token')
     }
 
-    response.clearCookie('oat_token')
-    return response.status(status).send(data)
+    return response.status(status).send({ ...data, status })
   }
 
   /**
@@ -81,13 +77,9 @@ export default class AuthController {
   async me({ request, response }: HttpContext) {
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.authService.getUser(authToken)
+    const { data, status } = await this.authService.getUser(authToken)
 
-    if (!ok) {
-      return response.status(status).send(data)
-    }
-
-    return response.status(status).send(data)
+    return response.status(status).send({ ...data, status })
   }
 
   /**
@@ -97,16 +89,15 @@ export default class AuthController {
    * @returns UserModel
    */
   async update({ request, response }: HttpContext) {
-    const { newPassword } = request.body()
+    const { newPassword, confirmNewPassword } = request.body()
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.authService.updateUser({ newPassword }, authToken)
+    const { data, status } = await this.authService.updateUser(
+      { newPassword, confirmNewPassword },
+      authToken
+    )
 
-    if (!ok) {
-      return response.status(status).send(data)
-    }
-
-    return response.status(status).send(data)
+    return response.status(status).send({ ...data, status })
   }
 
   /**
@@ -129,9 +120,8 @@ export default class AuthController {
 
     if (!ok) {
       response.clearCookie('oat_token')
-      return response.status(status).send(data)
     }
 
-    return response.status(status).send(data)
+    return response.status(status).send({ ...data, status })
   }
 }

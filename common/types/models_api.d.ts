@@ -9,6 +9,7 @@ export type UserModel = {
   userRole: UserRole
   createdAt: string
   updatedAt: string
+  profile: ProfileModel
 }
 
 export type ProfileModel = {

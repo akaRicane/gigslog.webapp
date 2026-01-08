@@ -7,8 +7,8 @@ type LoginCardProps = {}
 
 const LoginCard: React.FC<LoginCardProps> = () => {
   const [credentials, setCredentials] = React.useState<UserCredentials>({
-    email: 'admin@gigslogs.com',
-    password: 'admin123',
+    email: undefined,
+    password: undefined,
   })
 
   return (

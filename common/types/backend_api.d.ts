@@ -1,12 +1,14 @@
-import type { ProfileModel, UserModel } from '#common/types/models_api'
+import type { UserModel } from '#common/types/models_api'
 
 export type UserCredentials = {
-  email: string
-  password: string
+  email: string | undefined
+  password: string | undefined
+  confirmPassword?: string | undefined
 }
 
 export type UserUpdateInformations = {
-  newPassword?: string
+  newPassword: string
+  confirmNewPassword: string
 }
 
 export type TokenInformations = {
@@ -21,26 +23,27 @@ export type ApiResponse<T> = {
 }
 
 export type ApiResponseMessage = {
+  status: number
   message: string
 }
 
-export type ResponseCreateUser = { user: UserModel }
+export type ResponseCreateUser = {
+  user: UserModel
+  token: TokenInformations
+} & ApiResponseMessage
 
 export type ResponseLoginUser = {
   user: UserModel
   token: TokenInformations
-}
-
-export type ResponseLogoutUser = ApiResponseMessage
+} & ApiResponseMessage
 
 export type ResponseGetUser = {
   user: UserModel
-  profile: ProfileModel
-}
+} & ApiResponseMessage
 
 export type ResponseUpdateUser = {
   user: UserModel
-  profile: ProfileModel
-}
+} & ApiResponseMessage
 
+export type ResponseLogoutUser = ApiResponseMessage
 export type ResponseDeleteUser = ApiResponseMessage

@@ -21,6 +21,7 @@ const generateTempUserInformations = (): UserCredentials => {
   return {
     email: time + '@test.com',
     password: 'test_secret',
+    confirmPassword: 'test_secret',
   } as UserCredentials
 }
 
@@ -30,25 +31,30 @@ test.group('Authentication', () => {
 
     const registerResponse = await client.post(WebAppAuthRoutes.REGISTER).json(tempUser)
     registerResponse.assertStatus(201)
+    registerResponse.assertBodyContains({
+      user: {
+        email: tempUser.email,
+      },
+    })
 
     const loginResponse = await client.post(WebAppAuthRoutes.LOGIN).json(tempUser)
     loginResponse.assertStatus(200)
 
     // non persistent cookies in tests, extract from login response.
-    const cookies = loginResponse.cookies()
+    const oatToken = loginResponse.body().token.value
 
-    const meResponse = await client
-      .post(WebAppAuthRoutes.ME)
-      .withCookie('oat_token', cookies.oat_token.value)
+    const meResponse = await client.post(WebAppAuthRoutes.ME).withCookie('oat_token', oatToken)
 
     meResponse.assertStatus(200)
     meResponse.assertBodyContains({
-      email: tempUser.email,
+      user: {
+        email: tempUser.email,
+      },
     })
 
     const deleteResponse = await client
       .post(WebAppAuthRoutes.DELETE)
-      .withCookie('oat_token', cookies.oat_token.value)
+      .withCookie('oat_token', oatToken)
       .json(tempUser)
 
     deleteResponse.assertStatus(200)
@@ -60,24 +66,20 @@ test.group('Authentication', () => {
     const registerResponse = await client.post(WebAppAuthRoutes.REGISTER).json(tempUser)
     registerResponse.assertStatus(201)
 
-    const loginResponse = await client.post(WebAppAuthRoutes.LOGIN).json(tempUser)
-    loginResponse.assertStatus(200)
-
-    // non persistent cookies in tests, extract from login response.
-    const cookies = loginResponse.cookies()
+    // non persistent cookies in tests, extract from register response.
+    const oatToken = registerResponse.body().token.value
 
     const updateResponse = await client
       .post(WebAppAuthRoutes.UPDATE)
-      .withCookie('oat_token', cookies.oat_token.value)
-      .json({ newPassword: 'thisisthenewpassword' })
+      .withCookie('oat_token', oatToken)
+      .json({ newPassword: 'thisisthenewpassword', confirmNewPassword: 'thisisthenewpassword' })
 
     updateResponse.assertStatus(200)
 
     const logoutResponse = await client
       .post(WebAppAuthRoutes.LOGOUT)
-      .withCookie('oat_token', cookies.oat_token.value)
+      .withCookie('oat_token', oatToken)
 
-    console.log(logoutResponse.body())
     logoutResponse.assertStatus(200)
 
     const newLoginResponse = await client.post(WebAppAuthRoutes.LOGIN).json({
@@ -87,9 +89,11 @@ test.group('Authentication', () => {
 
     newLoginResponse.assertStatus(200)
 
+    const newOatToken = newLoginResponse.body().token.value
+
     const deleteResponse = await client
       .post(WebAppAuthRoutes.DELETE)
-      .withCookie('oat_token', newLoginResponse.cookies().oat_token.value)
+      .withCookie('oat_token', newOatToken)
       .json({
         email: tempUser.email,
         password: 'thisisthenewpassword',
