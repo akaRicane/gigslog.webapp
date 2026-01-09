@@ -1,8 +1,8 @@
 import NavigationsController from '#controllers/navigations_controller'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import React, { Activity } from 'react'
-import LoginCard from '~/components/actions/auth/LoginCard/LoginCard'
-import RegisterCard from '~/components/actions/RegisterCard/RegisterCard'
+import LoginCard from '~/components/auth/LoginCard/LoginCard'
+import RegisterCard from '~/components/auth/RegisterCard/RegisterCard'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 import './Login.css'
 
@@ -12,7 +12,9 @@ enum AvailableActionsCards {
 }
 
 const Login: React.FC<InferPageProps<NavigationsController, 'login'>> = () => {
-  const [selectedAction, setAction] = React.useState<AvailableActionsCards>(AvailableActionsCards.LOGIN)
+  const [selectedAction, setAction] = React.useState<AvailableActionsCards>(
+    AvailableActionsCards.LOGIN
+  )
 
   return (
     <PageLayout title="login">

@@ -1,4 +1,4 @@
-import { queryAuthLogout } from '~/app/auth_calls'
+import { queryAuthLogout } from '~/api/auth_calls'
 import './LogoutButton.css'
 
 const LogoutButton: React.FC = () => {

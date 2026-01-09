@@ -1,0 +1,24 @@
+.user-infos-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding-block: 2rem;
+
+  border-left: 1px solid white;
+}
+
+.user-infos-card > * {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 2rem;
+
+  padding-inline: 2rem;
+
+  font-size: medium;
+  color: var(--color-theme-font);
+  border: transparent;
+  background-color: transparent;
+}

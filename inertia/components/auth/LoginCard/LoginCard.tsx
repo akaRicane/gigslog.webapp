@@ -1,6 +1,6 @@
 import type { UserCredentials } from '#common/types/backend_api'
 import React from 'react'
-import { queryAuthLogin } from '~/app/auth_calls'
+import { queryAuthLogin } from '~/api/auth_calls'
 import './LoginCard.css'
 
 type LoginCardProps = {}

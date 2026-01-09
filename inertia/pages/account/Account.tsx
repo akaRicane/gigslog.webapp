@@ -1,41 +1,38 @@
 import NavigationsController from '#controllers/navigations_controller'
 import { InferPageProps } from '@adonisjs/inertia/types'
-import React from 'react'
-import { GrAction, GrCopy, GrLocationPin, GrMail, GrUser, GrValidate } from 'react-icons/gr'
-import LogoutButton from '~/components/actions/auth/LogoutButton/LogoutButton'
+import React, { Activity } from 'react'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
+import ProfileCard from '~/components/profile/ProfileCard/ProfileCard'
+import UpdateUserInfosForm from '~/components/user/UpdateUserInfosForm/UpdateUserInfosForm'
+import UserInfosCard from '~/components/user/UserInfosCard/UserInfosCard'
+import { AccountDynamicViews } from '~/pages/account/account_utils'
 import './Account.css'
 
 const Account: React.FC<InferPageProps<NavigationsController, 'account'>> = ({ user }) => {
+  const [dynamicView, setDynamicView] = React.useState<AccountDynamicViews>(
+    AccountDynamicViews.UPDATE_USER_INFOS
+  )
+
   return (
     <PageLayout title="My account">
       <div className="account-container">
-        <div className="profile-container">
-          <div className="profile-main-infos">
-            <div className="profile-main-infos-avatar">
-              {user.profile.avatarUrl ? <img src={user.profile.avatarUrl} /> : <GrUser />}
-            </div>
-            <p className="profile-main-infos-username">{user.profile.displayName}</p>
-            <p className="profile-main-infos-bio">{user.profile.bio || 'lorem'}</p>
-          </div>
-          <div className="profile-secondary-infos">
-            <div>
-              <GrMail />
-              <p>{user.email}</p>
-              <p>{user.emailIsVerified ? <GrValidate /> : <GrAction />}</p>
-            </div>
-            <button>
-              <GrCopy />
-              <p>{user.profile.userPublicId}</p>
-            </button>
-            <div>
-              <GrLocationPin />
-              <p>
-                {user.profile.city}, {user.profile.country}
-              </p>
-            </div>
-            <LogoutButton />
-          </div>
+        <div className="user-profile-container">
+          <ProfileCard profile={user.profile} />
+          <UserInfosCard user={user} queryUpdateUserInfosCard={setDynamicView} />
+        </div>
+
+        <div className="account-dynamic-content">
+          <Activity
+            mode={dynamicView === AccountDynamicViews.ACCOUNT_OVERVIEW ? 'visible' : 'hidden'}
+          >
+            <p>overview page</p>
+          </Activity>
+
+          <Activity
+            mode={dynamicView === AccountDynamicViews.UPDATE_USER_INFOS ? 'visible' : 'hidden'}
+          >
+            <UpdateUserInfosForm user={user} />
+          </Activity>
         </div>
       </div>
     </PageLayout>
