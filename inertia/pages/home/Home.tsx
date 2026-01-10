@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/react'
 import React from 'react'
 import PageLayout from '~/components/layouts/PageLayout/PageLayout'
 import './Home.css'
-import { NavigationRoutes } from '#common/enums/server_routes'
+import { NavigationRoutes } from '#common/enums/api_routes'
 
 const Home: React.FC<InferPageProps<NavigationsController, 'home'>> = () => {
   return (

@@ -1,3 +1,4 @@
+import { UsersAuthApiRoutes } from '#common/enums/api_routes'
 import { UserCredentials } from '#common/types/backend_api'
 import { test } from '@japa/runner'
 
@@ -6,15 +7,6 @@ import { test } from '@japa/runner'
  * 201: created ok
  * 204: no content ok
  */
-
-enum WebAppAuthRoutes {
-  REGISTER = '/auth/register',
-  DELETE = '/auth/delete',
-  LOGIN = '/auth/login',
-  LOGOUT = '/auth/logout',
-  ME = '/auth/me',
-  UPDATE = '/auth/update',
-}
 
 const generateTempUserInformations = (): UserCredentials => {
   const time: string = JSON.stringify(Date.now())
@@ -25,11 +17,11 @@ const generateTempUserInformations = (): UserCredentials => {
   } as UserCredentials
 }
 
-test.group('Authentication', () => {
+test.group('User Authentication', () => {
   test('User | register, login, read user infos & remove', async ({ client }) => {
     const tempUser: UserCredentials = generateTempUserInformations()
 
-    const registerResponse = await client.post(WebAppAuthRoutes.REGISTER).json(tempUser)
+    const registerResponse = await client.post(UsersAuthApiRoutes.REGISTER).json(tempUser)
     registerResponse.assertStatus(201)
     registerResponse.assertBodyContains({
       user: {
@@ -37,13 +29,13 @@ test.group('Authentication', () => {
       },
     })
 
-    const loginResponse = await client.post(WebAppAuthRoutes.LOGIN).json(tempUser)
+    const loginResponse = await client.post(UsersAuthApiRoutes.LOGIN).json(tempUser)
     loginResponse.assertStatus(200)
 
     // non persistent cookies in tests, extract from login response.
     const oatToken = loginResponse.body().token.value
 
-    const meResponse = await client.post(WebAppAuthRoutes.ME).withCookie('oat_token', oatToken)
+    const meResponse = await client.post(UsersAuthApiRoutes.ME).withCookie('oat_token', oatToken)
 
     meResponse.assertStatus(200)
     meResponse.assertBodyContains({
@@ -53,7 +45,7 @@ test.group('Authentication', () => {
     })
 
     const deleteResponse = await client
-      .post(WebAppAuthRoutes.DELETE)
+      .post(UsersAuthApiRoutes.REMOVE)
       .withCookie('oat_token', oatToken)
       .json(tempUser)
 
@@ -63,26 +55,26 @@ test.group('Authentication', () => {
   test('User | update user password, logout & login again', async ({ client }) => {
     const tempUser: UserCredentials = generateTempUserInformations()
 
-    const registerResponse = await client.post(WebAppAuthRoutes.REGISTER).json(tempUser)
+    const registerResponse = await client.post(UsersAuthApiRoutes.REGISTER).json(tempUser)
     registerResponse.assertStatus(201)
 
     // non persistent cookies in tests, extract from register response.
     const oatToken = registerResponse.body().token.value
 
     const updateResponse = await client
-      .post(WebAppAuthRoutes.UPDATE)
+      .post(UsersAuthApiRoutes.UPDATE)
       .withCookie('oat_token', oatToken)
       .json({ newPassword: 'thisisthenewpassword', confirmNewPassword: 'thisisthenewpassword' })
 
     updateResponse.assertStatus(200)
 
     const logoutResponse = await client
-      .post(WebAppAuthRoutes.LOGOUT)
+      .post(UsersAuthApiRoutes.LOGOUT)
       .withCookie('oat_token', oatToken)
 
     logoutResponse.assertStatus(200)
 
-    const newLoginResponse = await client.post(WebAppAuthRoutes.LOGIN).json({
+    const newLoginResponse = await client.post(UsersAuthApiRoutes.LOGIN).json({
       email: tempUser.email,
       password: 'thisisthenewpassword',
     })
@@ -92,12 +84,52 @@ test.group('Authentication', () => {
     const newOatToken = newLoginResponse.body().token.value
 
     const deleteResponse = await client
-      .post(WebAppAuthRoutes.DELETE)
+      .post(UsersAuthApiRoutes.REMOVE)
       .withCookie('oat_token', newOatToken)
       .json({
         email: tempUser.email,
         password: 'thisisthenewpassword',
       })
+
+    deleteResponse.assertStatus(200)
+  })
+})
+
+test.group('User Profile', () => {
+  test('User | update profile informations', async ({ client }) => {
+    const tempUser: UserCredentials = generateTempUserInformations()
+
+    const registerResponse = await client.post(UsersAuthApiRoutes.REGISTER).json(tempUser)
+    registerResponse.assertStatus(201)
+    registerResponse.assertBodyContains({
+      user: {
+        email: tempUser.email,
+      },
+    })
+
+    const oatToken = registerResponse.body().token.value
+
+    const profileUpdate = await client
+      .post(UsersAuthApiRoutes.UPDATE_PROFILE)
+      .json({
+        displayName: 'my new username',
+      })
+      .withCookie('oat_token', oatToken)
+
+    profileUpdate.assertStatus(200)
+    profileUpdate.assertBodyContains({
+      user: {
+        email: tempUser.email,
+        profile: {
+          displayName: 'my new username',
+        },
+      },
+    })
+
+    const deleteResponse = await client
+      .post(UsersAuthApiRoutes.REMOVE)
+      .withCookie('oat_token', oatToken)
+      .json(tempUser)
 
     deleteResponse.assertStatus(200)
   })

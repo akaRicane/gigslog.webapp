@@ -1,4 +1,6 @@
-import { UserModel } from '#common/types/models_api'
+import { ProfileModel, UserModel } from '#common/types/models_api'
+import React from 'react'
+import { queryProfileUpdate } from '~/api/profile_calls'
 import './UpdateUserInfosForm.css'
 
 type UpdateUserInfosFormProps = {
@@ -6,14 +8,21 @@ type UpdateUserInfosFormProps = {
 }
 
 const UpdateUserInfosForm: React.FC<UpdateUserInfosFormProps> = ({ user }) => {
+  const [profileState, setProfileState] = React.useState<ProfileModel>(user.profile)
+
   return (
     <div>
-      <form>
+      <form action={() => queryProfileUpdate(profileState)}>
         <div>
           <p>Profile Informations</p>
           <div>
             <p>username</p>
-            <p>{user.profile.displayName}</p>
+            <input
+              value={profileState.displayName || ''}
+              onChange={(e) => {
+                setProfileState({ ...profileState, displayName: e.target.value })
+              }}
+            />
           </div>
           <div>
             <p>location</p>
@@ -26,6 +35,7 @@ const UpdateUserInfosForm: React.FC<UpdateUserInfosFormProps> = ({ user }) => {
             <p>{user.profile.bio}</p>
           </div>
         </div>
+        <button type="submit">submit</button>
       </form>
     </div>
   )

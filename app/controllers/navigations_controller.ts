@@ -1,9 +1,9 @@
-import AuthenticationApiService from '#services/api/authentication_service'
 import { ContentApiService } from '#services/api/content_service'
+import UserApiService from '#services/api/user_service'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class NavigationsController {
-  authService = new AuthenticationApiService()
+  authService = new UserApiService()
   contentService = new ContentApiService()
 
   home({ inertia }: HttpContext) {

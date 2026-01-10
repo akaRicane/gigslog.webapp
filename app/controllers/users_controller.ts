@@ -1,11 +1,12 @@
 // app/controllers/auth_controller.ts
-import AuthenticationApiService from '#services/api/authentication_service'
+import { ProfileModel } from '#common/types/models_api'
+import UserApiService from '#services/api/user_service'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
 @inject()
-export default class AuthController {
-  authService = new AuthenticationApiService()
+export default class UserController {
+  userService = new UserApiService()
 
   /**
    * Creates/registers a new user
@@ -16,11 +17,13 @@ export default class AuthController {
   async register({ request, response }: HttpContext) {
     const { email, password, confirmPassword } = request.body()
 
-    const { data, status, ok } = await this.authService.createUser({
+    const { data, status, ok } = await this.userService.createUser({
       email,
       password,
       confirmPassword,
     })
+
+    console.log(data, status)
 
     ok
       ? response.cookie('oat_token', data.token.value as string)
@@ -38,7 +41,7 @@ export default class AuthController {
   async login({ request, response }: HttpContext) {
     const { email, password } = request.body()
 
-    const { data, status, ok } = await this.authService.loginUser({
+    const { data, status, ok } = await this.userService.loginUser({
       email,
       password,
     })
@@ -59,7 +62,7 @@ export default class AuthController {
   async logout({ request, response }: HttpContext) {
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.authService.logoutUser(authToken)
+    const { data, status, ok } = await this.userService.logoutUser(authToken)
 
     if (ok) {
       response.clearCookie('oat_token')
@@ -77,7 +80,7 @@ export default class AuthController {
   async me({ request, response }: HttpContext) {
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status } = await this.authService.getUser(authToken)
+    const { data, status } = await this.userService.getUser(authToken)
 
     return response.status(status).send({ ...data, status })
   }
@@ -92,7 +95,7 @@ export default class AuthController {
     const { newPassword, confirmNewPassword } = request.body()
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status } = await this.authService.updateUser(
+    const { data, status } = await this.userService.updateUser(
       { newPassword, confirmNewPassword },
       authToken
     )
@@ -101,20 +104,42 @@ export default class AuthController {
   }
 
   /**
-   * Deletes the user
+   * Remomves / Deletes the user
    *
    * @param UserCredentials + cookie.oat_token
    * @returns ApiResponseMessage
    */
-  async delete({ request, response }: HttpContext) {
+  async remove({ request, response }: HttpContext) {
     const { email, password } = request.body()
     const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
 
-    const { data, status, ok } = await this.authService.deleteUser(
+    const { data, status, ok } = await this.userService.deleteUser(
       {
         email,
         password,
       },
+      authToken
+    )
+
+    if (!ok) {
+      response.clearCookie('oat_token')
+    }
+
+    return response.status(status).send({ ...data, status })
+  }
+
+  /**
+   * Updates user profile informations
+   *
+   * @param Partial<ProfileModel> & cookie.oat_token
+   * @returns UserModel
+   */
+  async updateProfile({ request, response }: HttpContext) {
+    const authToken: string = request.cookie('oat_token', 'invalid_oat_token')
+    const profileUpdateData: Partial<ProfileModel> = request.body()
+
+    const { data, status, ok } = await this.userService.updateProfile(
+      { ...profileUpdateData },
       authToken
     )
 

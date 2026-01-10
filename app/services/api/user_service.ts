@@ -1,5 +1,5 @@
 // app/services/backend_api_service.ts
-import { AuthenticationApiRoutes } from '#common/enums/api_routes'
+import { UsersAuthApiRoutes } from '#common/enums/api_routes'
 import {
   ApiResponse,
   ResponseCreateUser,
@@ -11,9 +11,10 @@ import {
   UserCredentials,
   UserUpdateInformations,
 } from '#common/types/backend_api'
+import { ProfileModel } from '#common/types/models_api'
 import env from '#start/env'
 
-export default class AuthenticationApiService {
+export default class UserApiService {
   private baseUrl: string
 
   constructor() {
@@ -41,27 +42,27 @@ export default class AuthenticationApiService {
         ok: response.ok,
       }
     } catch (error) {
-      console.error('Backend API error:', error)
-      throw new Error('Failed to communicate with backend API')
+      console.error('Backend User/Auth API error:', error)
+      throw new Error('Failed to communicate with backend User/Auth API')
     }
   }
 
   async createUser(userCredentials: UserCredentials): Promise<ApiResponse<ResponseCreateUser>> {
-    return this.request(AuthenticationApiRoutes.REGISTER, {
+    return this.request(UsersAuthApiRoutes.REGISTER, {
       method: 'POST',
       body: JSON.stringify(userCredentials),
     })
   }
 
   async loginUser(userCredentials: UserCredentials): Promise<ApiResponse<ResponseLoginUser>> {
-    return this.request(AuthenticationApiRoutes.LOGIN, {
+    return this.request(UsersAuthApiRoutes.LOGIN, {
       method: 'POST',
       body: JSON.stringify(userCredentials),
     })
   }
 
   async logoutUser(authToken: string): Promise<ApiResponse<ResponseLogoutUser>> {
-    return this.request(AuthenticationApiRoutes.LOGOUT, {
+    return this.request(UsersAuthApiRoutes.LOGOUT, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -70,7 +71,7 @@ export default class AuthenticationApiService {
   }
 
   async getUser(authToken: string): Promise<ApiResponse<ResponseGetUser>> {
-    return this.request(AuthenticationApiRoutes.ME, {
+    return this.request(UsersAuthApiRoutes.ME, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -82,7 +83,7 @@ export default class AuthenticationApiService {
     userUpdateData: UserUpdateInformations,
     authToken: string
   ): Promise<ApiResponse<ResponseUpdateUser>> {
-    return this.request(AuthenticationApiRoutes.UPDATE, {
+    return this.request(UsersAuthApiRoutes.UPDATE, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -91,11 +92,24 @@ export default class AuthenticationApiService {
     })
   }
 
+  async updateProfile(
+    profileUpdateData: Partial<ProfileModel>,
+    authToken: string
+  ): Promise<ApiResponse<ResponseUpdateUser>> {
+    return this.request(UsersAuthApiRoutes.UPDATE_PROFILE, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(profileUpdateData),
+    })
+  }
+
   async deleteUser(
     userCredentials: UserCredentials,
     authToken: string
   ): Promise<ApiResponse<ResponseDeleteUser>> {
-    return this.request(AuthenticationApiRoutes.REMOVE, {
+    return this.request(UsersAuthApiRoutes.REMOVE, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${authToken}`,

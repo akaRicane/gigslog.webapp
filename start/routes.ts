@@ -7,19 +7,21 @@
 |
 */
 
-const AuthenticationController = () => import('#controllers/authentication_controller')
 const NavigationsController = () => import('#controllers/navigations_controller')
+const UsersController = () => import('#controllers/users_controller')
 
+import { NavigationRoutes, UsersAuthApiRoutes } from '#common/enums/api_routes'
 import router from '@adonisjs/core/services/router'
 
-router.get('/', [NavigationsController, 'home'])
-router.get('/explore', [NavigationsController, 'explore'])
-router.get('/account', [NavigationsController, 'account'])
-router.get('/login', [NavigationsController, 'login'])
+router.get(NavigationRoutes.HOME, [NavigationsController, 'home'])
+router.get(NavigationRoutes.EXPLORE, [NavigationsController, 'explore'])
+router.get(NavigationRoutes.ACCOUNT, [NavigationsController, 'account'])
+router.get(NavigationRoutes.LOGIN, [NavigationsController, 'login'])
 
-router.post('/auth/register', [AuthenticationController, 'register'])
-router.post('/auth/login', [AuthenticationController, 'login'])
-router.post('/auth/logout', [AuthenticationController, 'logout'])
-router.post('/auth/me', [AuthenticationController, 'me'])
-router.post('/auth/update', [AuthenticationController, 'update'])
-router.post('/auth/delete', [AuthenticationController, 'delete'])
+router.post(UsersAuthApiRoutes.REGISTER, [UsersController, 'register'])
+router.post(UsersAuthApiRoutes.LOGIN, [UsersController, 'login'])
+router.post(UsersAuthApiRoutes.LOGOUT, [UsersController, 'logout'])
+router.post(UsersAuthApiRoutes.REMOVE, [UsersController, 'remove'])
+router.post(UsersAuthApiRoutes.ME, [UsersController, 'me'])
+router.post(UsersAuthApiRoutes.UPDATE, [UsersController, 'update'])
+router.post(UsersAuthApiRoutes.UPDATE_PROFILE, [UsersController, 'updateProfile'])

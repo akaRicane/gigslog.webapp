@@ -1,4 +1,4 @@
-import { AuthenticationRoutes, NavigationRoutes } from '#common/enums/server_routes'
+import { NavigationRoutes, UsersAuthApiRoutes } from '#common/enums/api_routes'
 import { ApiResponseMessage, UserCredentials } from '#common/types/backend_api'
 
 export const queryAuthRegister = async (credentials: UserCredentials): Promise<void> => {
@@ -6,7 +6,7 @@ export const queryAuthRegister = async (credentials: UserCredentials): Promise<v
     return Promise.reject(alert('confirmation password does not match'))
   }
 
-  return fetch(AuthenticationRoutes.REGISTER, {
+  return fetch(UsersAuthApiRoutes.REGISTER, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -14,7 +14,7 @@ export const queryAuthRegister = async (credentials: UserCredentials): Promise<v
     body: JSON.stringify(credentials),
   })
     .then(async (res) => {
-      if (res.status === 200) {
+      if (res.status === 201) {
         return Promise.resolve(window.location.replace(NavigationRoutes.ACCOUNT))
       } else {
         const data: ApiResponseMessage = await res.json()
@@ -27,7 +27,7 @@ export const queryAuthRegister = async (credentials: UserCredentials): Promise<v
 }
 
 export const queryAuthLogin = async (credentials: UserCredentials): Promise<void> => {
-  return fetch(AuthenticationRoutes.LOGIN, {
+  return fetch(UsersAuthApiRoutes.LOGIN, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export const queryAuthLogin = async (credentials: UserCredentials): Promise<void
 }
 
 export const queryAuthLogout = async (): Promise<void> => {
-  return fetch(AuthenticationRoutes.LOGOUT, {
+  return fetch(UsersAuthApiRoutes.LOGOUT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
