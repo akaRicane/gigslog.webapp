@@ -67,6 +67,7 @@
     "@inertiajs/react": "^2.3.1",
     "@types/react-icons": "^2.2.7",
     "@vinejs/vine": "^3.0.1",
+    "clsx": "^2.1.1",
     "edge.js": "^6.2.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
