@@ -1,4 +1,3 @@
-import { UsersAuthApiRoutes } from '#common/enums/api_routes'
 import { defineConfig } from '@adonisjs/shield'
 
 const shieldConfig = defineConfig({
@@ -18,15 +17,7 @@ const shieldConfig = defineConfig({
    */
   csrf: {
     enabled: true,
-    exceptRoutes: [
-      UsersAuthApiRoutes.REGISTER,
-      UsersAuthApiRoutes.REMOVE,
-      UsersAuthApiRoutes.LOGIN,
-      UsersAuthApiRoutes.LOGOUT,
-      UsersAuthApiRoutes.ME,
-      UsersAuthApiRoutes.UPDATE,
-      UsersAuthApiRoutes.UPDATE_PROFILE,
-    ],
+    exceptRoutes: [],
     enableXsrfCookie: true,
     methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
   },

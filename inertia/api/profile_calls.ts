@@ -1,6 +1,7 @@
 import { UsersAuthApiRoutes } from '#common/enums/api_routes'
 import { ApiResponseMessage } from '#common/types/backend_api'
 import { ProfileModel } from '#common/types/models_api'
+import { getCsrfToken } from '~/api/api'
 import { removeNullFrom } from '../../common/utils/objects'
 
 export const queryProfileUpdate = async (profileData: Partial<ProfileModel>): Promise<void> => {
@@ -8,6 +9,7 @@ export const queryProfileUpdate = async (profileData: Partial<ProfileModel>): Pr
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-XSRF-TOKEN': getCsrfToken(),
     },
     body: JSON.stringify(removeNullFrom(profileData)),
   })

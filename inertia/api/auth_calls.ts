@@ -1,5 +1,6 @@
 import { NavigationRoutes, UsersAuthApiRoutes } from '#common/enums/api_routes'
 import { ApiResponseMessage, UserCredentials } from '#common/types/backend_api'
+import { getCsrfToken } from '~/api/api'
 
 export const queryAuthRegister = async (credentials: UserCredentials): Promise<void> => {
   if (credentials.password !== credentials.confirmPassword) {
@@ -10,6 +11,7 @@ export const queryAuthRegister = async (credentials: UserCredentials): Promise<v
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-XSRF-TOKEN': getCsrfToken(),
     },
     body: JSON.stringify(credentials),
   })
@@ -31,6 +33,7 @@ export const queryAuthLogin = async (credentials: UserCredentials): Promise<void
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-XSRF-TOKEN': getCsrfToken(),
     },
     body: JSON.stringify(credentials),
   })
@@ -52,6 +55,7 @@ export const queryAuthLogout = async (): Promise<void> => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-XSRF-TOKEN': getCsrfToken(),
     },
   })
     .then(async (res) => {
